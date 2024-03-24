@@ -40,7 +40,7 @@ public class LogUtils {
         // 获取当前线程名称
         String name = Thread.currentThread().getName();
         // 获取当前的时间
-        String time = LocalTime.now().format(DateTimeFormatter.ofPattern("hh:mm:ss"));
+        String time = LocalTime.now().format(DateTimeFormatter.ofPattern("yy:MM:dd hh:mm:ss"));
         // 打印信息： 时间 线程名 日志级别 信息
         System.out.println(time + " " + name + level + msg);
     }
