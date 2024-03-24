@@ -2,6 +2,7 @@ package com.hzxpowermode.core;
 
 import com.hzxpowermode.constant.Constant;
 import com.hzxpowermode.utils.HttpUtils;
+import com.hzxpowermode.utils.LogUtils;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -39,9 +40,9 @@ public class Downloader {
                 bos.write(buffer, 0, len);
             }
         } catch (FileNotFoundException f) {
-            System.out.println("所下载的文件不存在");
+            LogUtils.info("所下载的文件不存在 {}", url);
         } catch (Exception e) {
-            System.out.println("文件下载失败");
+            LogUtils.error("文件下载失败");
         } finally {
             // 判断conn是否为空，进行conn连接的关闭操作
             if (conn != null) {

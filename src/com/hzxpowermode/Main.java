@@ -1,6 +1,7 @@
 package com.hzxpowermode;
 
 import com.hzxpowermode.core.Downloader;
+import com.hzxpowermode.utils.LogUtils;
 
 import java.util.Scanner;
 
@@ -12,7 +13,7 @@ public class Main {
         String url = null;
         if (args == null || args.length == 0) {
             for (; ; ) {
-                System.out.println("请输入下载地址");
+                LogUtils.info("请输入下载地址：");
                 Scanner sc = new Scanner(System.in);
                 url = sc.nextLine();
                 if (url != null && url.length() != 0) {
@@ -27,6 +28,7 @@ public class Main {
         long start = System.currentTimeMillis();
         downloader.download(url);
         long end = System.currentTimeMillis();
-        System.out.println("下载时间为：" + (double) ((end - start) / 1000));
+        double time = (double) (end - start) / 1000;
+        LogUtils.info("下载完成 下载耗时为{}", time);
     }
 }
