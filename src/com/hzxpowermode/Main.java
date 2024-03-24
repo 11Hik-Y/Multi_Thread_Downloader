@@ -12,13 +12,14 @@ public class Main {
             for (; ; ) {
                 System.out.println("请输入下载地址");
                 Scanner sc = new Scanner(System.in);
-                String s = sc.nextLine();
-                if (s != null && s.length() != 0) {
-                    url = s;
+                url = sc.nextLine();
+                if (url != null && url.length() != 0) {
+                    break;
                 }
             }
         } else {
             url = args[0];
         }
+        System.out.println(url);
     }
 }
