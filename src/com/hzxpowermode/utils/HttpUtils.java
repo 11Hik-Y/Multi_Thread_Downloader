@@ -2,12 +2,10 @@ package com.hzxpowermode.utils;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
 
-/*
-    http相关工具类
+/**
+ * http相关工具类
  */
 public class HttpUtils {
 

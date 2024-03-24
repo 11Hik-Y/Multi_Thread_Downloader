@@ -1,10 +1,12 @@
 package com.hzxpowermode;
 
+import com.hzxpowermode.core.Downloader;
+
 import java.util.Scanner;
 
-/*
-    主类
-*/
+/**
+ * 主类
+ */
 public class Main {
     public static void main(String[] args) {
         String url = null;
@@ -20,6 +22,11 @@ public class Main {
         } else {
             url = args[0];
         }
-        System.out.println(url);
+
+        Downloader downloader = new Downloader();
+        long start = System.currentTimeMillis();
+        downloader.download(url);
+        long end = System.currentTimeMillis();
+        System.out.println("下载时间为：" + (double) ((end - start) / 1000));
     }
 }
