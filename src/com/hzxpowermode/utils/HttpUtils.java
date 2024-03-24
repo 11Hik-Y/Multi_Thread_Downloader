@@ -26,6 +26,12 @@ public class HttpUtils {
         return conn;
     }
 
+    /**
+     * 获取下载的文件的名字
+     *
+     * @param url 文件地址
+     * @return 文件名
+     */
     public static String getHttpFileName(String url) {
         int index = url.lastIndexOf("/");
         return url.substring(index + 1);
