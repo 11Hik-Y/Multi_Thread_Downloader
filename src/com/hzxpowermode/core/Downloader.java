@@ -43,7 +43,7 @@ public class Downloader {
             // 创建获取下载信息的任务对象
             downloadInfoThread = new DownloadInfoThread(contentLength);
             // 将任务交给线程执行，每隔一秒执行一次
-            scheduledExecutorService.scheduleAtFixedRate(downloadInfoThread, 0, 1, java.util.concurrent.TimeUnit.SECONDS);
+            scheduledExecutorService.scheduleAtFixedRate(downloadInfoThread, 1, 1, java.util.concurrent.TimeUnit.SECONDS);
 
         } catch (IOException e) {
             e.printStackTrace();

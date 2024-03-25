@@ -15,7 +15,7 @@ public class LogUtils {
      * @param args 参数
      */
     public static void info(String msg, Object... args) {
-        print(msg, "-info-", args);
+        print(msg, " INFO ", args);
     }
 
     /**
@@ -25,7 +25,7 @@ public class LogUtils {
      * @param args 参数
      */
     public static void error(String msg, Object... args) {
-        print(msg, "-error-", args);
+        print(msg, " ERROR ", args);
     }
 
     /**

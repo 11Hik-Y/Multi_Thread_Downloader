@@ -10,5 +10,5 @@ public class Constant {
 
     public static final double KB = 1024d;
 
-    public static final int BYTE_SIZE = 1024 * 100;
+    public static final int BYTE_SIZE = 1024 * 128;
 }
