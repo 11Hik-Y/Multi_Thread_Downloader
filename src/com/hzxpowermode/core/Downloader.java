@@ -35,9 +35,8 @@ public class Downloader {
         ) {
             // 定义一个1MB大小的缓冲数组，用于存储每次读取到的数据
             int len = -1;
-            byte[] buffer = new byte[3 * 1024 * 1024];
-            while ((len = bis.read(buffer)) != -1) {
-                bos.write(buffer, 0, len);
+            while ((len = bis.read()) != -1) {
+                bos.write(len);
             }
         } catch (FileNotFoundException f) {
             LogUtils.info("所下载的文件不存在 {}", url);
