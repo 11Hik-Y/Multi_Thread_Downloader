@@ -1,21 +1,23 @@
 package com.hzxpowermode.core;
 
 import com.hzxpowermode.constant.Constant;
+import com.hzxpowermode.utils.LogUtils;
 
 public class DownloadInfoThread implements Runnable {
     // 下载文件的总大小
     private long httpFileContentLength;
 
-    //已下载的文件的大小
-    private double finishedSize;
-
-    // 本次累计下载的文件大小
+    // 累计下载的文件大小
     private volatile double downSize;
 
-    // 前一次下载的大小
-    public double prevSize;
+    // 前一秒下载的文件大小
+    private double prevSize;
 
-    public DownloadInfoThread(int httpFileContentLength) {
+    public void cumulation(double downSize) {
+        this.downSize += downSize;
+    }
+
+    public DownloadInfoThread(long httpFileContentLength) {
         this.httpFileContentLength = httpFileContentLength;
     }
 
@@ -29,7 +31,7 @@ public class DownloadInfoThread implements Runnable {
         prevSize = downSize;
 
         // 剩余文件的大小
-        double remainSize = httpFileContentLength - finishedSize - downSize;
+        double remainSize = httpFileContentLength - downSize;
 
         // 计算剩余时间
         String remainTime = String.format("%.1f", remainSize / Constant.KB / speed);
@@ -39,12 +41,12 @@ public class DownloadInfoThread implements Runnable {
         }
 
         // 已下载的大小
-        String currentFileSize = String.format("%.2f", (downSize - finishedSize) / Constant.MB);
+        String currentFileSize = String.format("%.2f", downSize / Constant.MB);
 
-        String downInfo = String.format("文件大小：%s MB，已下载：%s MB，速度：%s KB/s，剩余：%s MB，剩余时间：%s s",
+        String downInfo = String.format("文件大小：%s MB，已下载：%s MB，速度：%s KB/s，剩余：%.2f MB，剩余时间：%s s",
                 fileSize, currentFileSize, speed, remainSize / Constant.MB, remainTime);
 
         System.out.println("\r");
-        System.out.println(downInfo);
+        LogUtils.info(downInfo);
     }
 }

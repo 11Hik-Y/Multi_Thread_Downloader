@@ -29,6 +29,6 @@ public class Main {
         downloader.download(url);
         long end = System.currentTimeMillis();
         double time = (double) (end - start) / 1000;
-        LogUtils.info("下载完成 下载耗时为{}", time);
+        LogUtils.info("文件下载完成 总耗时为 {}s", time);
     }
 }
