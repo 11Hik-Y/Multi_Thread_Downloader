@@ -11,4 +11,8 @@ public class Constant {
     public static final double KB = 1024d;
 
     public static final int BYTE_SIZE = 1024 * 128;
+
+    // 线程数量
+    public static final int THREAD_NUM = 5;
+
 }

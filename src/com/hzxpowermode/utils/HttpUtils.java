@@ -9,6 +9,33 @@ import java.net.URL;
  */
 public class HttpUtils {
 
+    public static long getFileContentLength(String url) throws IOException {
+        long contentLength = 0;
+        HttpURLConnection conn = null;
+        //关闭资源
+        try {
+            conn = getHttpURLConnection(url);
+            contentLength = conn.getContentLengthLong();
+        } finally {
+            if (conn != null) {
+                conn.disconnect();
+            }
+        }
+        return contentLength;
+    }
+
+    public static HttpURLConnection getHttpURLConnection(String url, long startPos, long endPos) throws IOException {
+        HttpURLConnection conn = getHttpURLConnection(url);
+        LogUtils.info("下载的区间为：{} - {}", startPos, endPos);
+
+        if (endPos != 0) {
+            conn.setRequestProperty("Range", "bytes=" + startPos + "-" + endPos);
+        } else {
+            conn.setRequestProperty("Range", "bytes=" + startPos + "-");
+        }
+        return conn;
+    }
+
     /**
      * 获取HttpURLConnection连接对象
      *
