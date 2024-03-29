@@ -72,6 +72,14 @@ public class Downloader {
                     e.printStackTrace();
                 }
             });
+
+            // 文件下载完毕之后
+            // 合并
+            if (merge(fileName)) {
+                // 删除临时文件
+                clearTempFile(fileName);
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -83,14 +91,24 @@ public class Downloader {
             }
             // 关闭线程池
             scheduledExecutorService.shutdownNow();
+
+            try {
+                // 关闭线程池
+                pool.shutdown();
+                if (pool.awaitTermination(2, TimeUnit.SECONDS)) {
+                    pool.shutdownNow();
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     /**
      * 分割下载
      *
-     * @param url
-     * @param futureList
+     * @param url        链接
+     * @param futureList 任务集合
      */
     public void split(String url, ArrayList<Future> futureList) {
         try {
@@ -118,4 +136,54 @@ public class Downloader {
             e.printStackTrace();
         }
     }
+
+    /**
+     * 文件合并
+     *
+     * @param fileName 文件名
+     * @return 是否合并成功
+     */
+    public boolean merge(String fileName) {
+        System.out.println();
+        LogUtils.info("开始合并文件 {}", fileName);
+        byte[] buffer = new byte[Constant.BYTE_SIZE];
+        int len = -1;
+        try (
+                RandomAccessFile r = new RandomAccessFile(fileName, "rw")
+        ) {
+            for (int i = 0; i < Constant.THREAD_NUM; i++) {
+                try (
+                        BufferedInputStream bis =
+                                new BufferedInputStream(new FileInputStream(fileName + ".temp" + i))
+                ) {
+                    while ((len = bis.read(buffer)) != -1) {
+                        r.write(buffer, 0, len);
+                    }
+                }
+            }
+            LogUtils.info("文件 {} 合并完成", fileName);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * 清除临时文件
+     *
+     * @param fileName 文件名
+     * @return 是否删除成功
+     */
+    public boolean clearTempFile(String fileName) {
+        for (int i = 0; i < Constant.THREAD_NUM; i++) {
+            File f = new File(fileName + ".temp" + i);
+            if (f.exists()) {
+                f.delete();
+            }
+        }
+
+        return true;
+    }
+
 }

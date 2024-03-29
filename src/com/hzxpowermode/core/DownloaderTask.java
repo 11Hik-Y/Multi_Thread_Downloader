@@ -41,7 +41,9 @@ public class DownloaderTask implements Callable<Boolean> {
         ) {
             byte[] buffer = new byte[Constant.BYTE_SIZE];
             int len = -1;
-            while ((len = bis.read(buffer)) != -1){
+            while ((len = bis.read(buffer)) != -1) {
+                // 统计一秒内的下载大小，通过原子类进行
+                DownloadInfoThread.downSize.add(len);
                 w.write(buffer, 0, len);
             }
         } catch (FileNotFoundException e) {
